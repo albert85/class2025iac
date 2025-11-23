@@ -15,7 +15,7 @@ provider "aws" {
 
 
 resource "aws_instance" "nginx-node" {
-  ami                    = "ami-038494630aa32ef56"
+  ami                    = "ami-08b6a2983df6e9e25"
   instance_type          = "t3.micro"
   subnet_id              = "subnet-060ba13bd6800a0db"
   vpc_security_group_ids = ["sg-090804d4ff518079d"]
