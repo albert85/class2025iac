@@ -72,7 +72,7 @@ resource "aws_security_group" "web_sg" {
 resource "aws_instance" "web-node" {
   ami                    = "ami-0f50f13aefb6c0a5d"
   instance_type          = "t3.micro"
-  subnet_id              = "subnet-060ba13bd6800a0db"
+  subnet_id              = "subnet-08cc6a7a9b660d73e"
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   key_name               = "devop-keypair"
 
@@ -131,7 +131,7 @@ resource "aws_security_group" "python_sg" {
 resource "aws_instance" "python-node" {
   ami                    = "ami-0f50f13aefb6c0a5d"
   instance_type          = "t3.micro"
-  subnet_id              = "subnet-060ba13bd6800a0db"
+  subnet_id              = "subnet-08cc6a7a9b660d73e"
   vpc_security_group_ids = [aws_security_group.python_sg.id]
   key_name               = "devop-keypair"
 
@@ -190,7 +190,7 @@ resource "aws_security_group" "java_sg" {
 resource "aws_instance" "java-node" {
   ami                    = "ami-0f50f13aefb6c0a5d"
   instance_type          = "t3.micro"
-  subnet_id              = "subnet-060ba13bd6800a0db"
+  subnet_id              = "subnet-08cc6a7a9b660d73e"
   vpc_security_group_ids = [aws_security_group.java_sg.id]
   key_name               = "devop-keypair"
 
