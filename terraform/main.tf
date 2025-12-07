@@ -132,7 +132,7 @@ resource "aws_instance" "python-node" {
   ami                    = var.project_ami
   instance_type          = var.project_instance_type
   subnet_id              = var.project_subnet
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  vpc_security_group_ids = [aws_security_group.python_sg.id]
   key_name               =  var.project_keyname
 
   tags = {
