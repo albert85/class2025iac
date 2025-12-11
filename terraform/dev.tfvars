@@ -1,0 +1,5 @@
+project_vpc = "vpc-0a1624f291bfb283f"
+project_ami  = "ami-08b6a2983df6e9e25"
+project_instance_type = "t3.micro"
+project_subnet  = "subnet-060ba13bd6800a0db"
+project_keyname  = "MasterClass2025"

@@ -28,7 +28,7 @@ resource "aws_security_group" "web_sg" {
 
   name        = "web-sg"
   description = "Allow SSH and Port 80  inbound, all outbound"
-  vpc_id      = "vpc-0981ae2afd0146876"
+  vpc_id      = var.project_vpc 
 
 
   # inbound SSH
@@ -70,11 +70,11 @@ resource "aws_security_group" "web_sg" {
 
 
 resource "aws_instance" "web-node" {
-  ami                    = "ami-0f50f13aefb6c0a5d"
-  instance_type          = "t3.micro"
-  subnet_id              = "subnet-08cc6a7a9b660d73e"
+  ami                    = var.project_ami
+  instance_type          = var.project_instance_type
+  subnet_id              = var.project_subnet
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  key_name               = "devop-keypair"
+  key_name               =  var.project_keyname
 
   tags = {
     Name = "web-node"
@@ -87,7 +87,7 @@ resource "aws_security_group" "python_sg" {
 
   name        = "python-sg"
   description = "Allow SSH and Port 9000  inbound, all outbound"
-  vpc_id      = "vpc-0981ae2afd0146876"
+  vpc_id      = var.project_vpc
 
 
   # inbound SSH
@@ -129,11 +129,11 @@ resource "aws_security_group" "python_sg" {
 
 
 resource "aws_instance" "python-node" {
-  ami                    = "ami-0f50f13aefb6c0a5d"
-  instance_type          = "t3.micro"
-  subnet_id              = "subnet-08cc6a7a9b660d73e"
+  ami                    = var.project_ami
+  instance_type          = var.project_instance_type
+  subnet_id              = var.project_subnet
   vpc_security_group_ids = [aws_security_group.python_sg.id]
-  key_name               = "devop-keypair"
+  key_name               =  var.project_keyname
 
   tags = {
     Name = "python-node"
