@@ -20,6 +20,50 @@ provider "aws" {
   region = "eu-north-1"
 }
 
+# -------------------------
+# Web Node Security Group
+# -------------------------
+
+resource "aws_security_group" "web_sg" {
+
+  name        = "web-sg"
+  description = "Allow SSH and Port 80  inbound, all outbound"
+  vpc_id      = var.project_vpc 
+
+
+  # inbound SSH
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # inbound 80 (web)
+  ingress {
+    description = "Web port 80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "web-security_group"
+  }
+
+}
+
 #-------------------------
 # Web EC2 Instance
 # ------------------------
@@ -35,6 +79,49 @@ resource "aws_instance" "web-node" {
   tags = {
     Name = "web-node"
   }
+}
+
+
+# Python backend setup
+
+resource "aws_security_group" "python_sg" {
+
+  name        = "python-sg"
+  description = "Allow SSH and Port 8000  inbound, all outbound"
+  vpc_id      = var.project_vpc
+
+
+  # inbound SSH
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # inbound 8000 (app)
+  ingress {
+    description = "Python App port 8000"
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "python-app-security_group"
+  }
+
 }
 
 #-------------------------
@@ -54,6 +141,49 @@ resource "aws_instance" "python-node" {
   }
 }
 
+
+# Java backend setup
+
+resource "aws_security_group" "java_sg" {
+
+  name        = "java-sg"
+  description = "Allow SSH and Port 9090  inbound, all outbound"
+  vpc_id      = var.project_vpc
+
+
+  # inbound SSH
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # inbound 9090 (app)
+  ingress {
+    description = "Python App port 9090"
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "java-app-security_group"
+  }
+
+}
+
 # Java backend setup
 
 #-------------------------
@@ -62,11 +192,11 @@ resource "aws_instance" "python-node" {
 
 
 resource "aws_instance" "java-node" {
-  ami                    = "ami-0f50f13aefb6c0a5d"
-  instance_type          = "t3.micro"
-  subnet_id              = "subnet-08cc6a7a9b660d73e"
+  ami                    = var.project_ami
+  instance_type          = var.project_instance_type
+  subnet_id              = var.project_subnet
   vpc_security_group_ids = [aws_security_group.java_sg.id]
-  key_name               = "devop-keypair"
+  key_name               = var.project_keyname
 
   tags = {
     Name = "java-node"
