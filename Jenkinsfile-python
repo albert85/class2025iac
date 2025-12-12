@@ -20,8 +20,7 @@ pipeline {
                     sh """
                         ssh -o StrictHostKeyChecking=no ec2-user@${params.PYTHON_SERVER_IP} '
                         sudo yum install git -y; 
-                        sudo yum install python3 -y;
-                        sudo python3 -m venv .venv;'
+                        sudo yum install python3 -y;'
                     """
                 }
             }
@@ -35,6 +34,7 @@ pipeline {
                         sudo rm -rf fruits-veg_market; 
                         git clone https://github.com/albert85/fruits-veg_market.git; 
                         cd fruits-veg_market/python;
+                        sudo python3 -m venv .venv;
                         source .venv/bin/activate;
                         pip install -r requirements.txt;
                         deactivate;
