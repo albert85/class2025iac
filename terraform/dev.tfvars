@@ -1,4 +1,4 @@
-project_ami  = "ami-0e319259454f464e6"
+project_ami  = "ami-0f50f13aefb6c0a5d"
 project_instance_type = "t3.micro"
 project_vpc = "vpc-0981ae2afd0146876"
 project_subnet  = "subnet-08cc6a7a9b660d73e"
